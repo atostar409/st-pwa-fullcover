@@ -1,0 +1,10 @@
+{
+    "display_name": "PWA FullCover",
+    "loading_order": 1,
+    "requires": [],
+    "optional": [],
+    "js": "index.js",
+    "author": "Atostraes",
+    "version": "1.0.0",
+    "homePage": "https://github.com/atostar409/st-pwa-fullcover"
+}
