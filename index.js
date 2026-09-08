@@ -58,9 +58,15 @@ body.PWA #send_form {
     min-width: 0 !important;
 }
 
-/* 5) 输入栏贴底:mobile-styles.css 给 body.PWA #sheld 塞了
-      padding-bottom: max(env(safe-area-inset-bottom), 15px),这里清零。 */
-body.PWA #sheld { padding-bottom: 0 !important; }
+/* 5) 贴底 + 贴边:mobile-styles.css 的 iOS 块给 body.PWA #sheld 塞了三处内边距——
+      padding-bottom: max(env(safe-area-inset-bottom), 15px)(输入栏浮空),
+      padding-left/right: max(env(safe-area-inset-left/right), 2px)
+      (竖屏左右各 2px 细缝、横屏让开刘海后是大缝,缝里露背景),全部清零。 */
+body.PWA #sheld {
+    padding-bottom: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
 
 /* 6) 角色卡/聊天卡片选择页(左右抽屉)满宽 */
 body.PWA #right-nav-panel,
