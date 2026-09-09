@@ -169,13 +169,19 @@ body.PWA .drawer-content {
         apply();
 
         const html = `
-        <div class="pwa-fullcover-settings">
-            <label class="checkbox_label">
-                <input id="pwa_fullcover_enabled" type="checkbox">
-                <span>PWA FullCover:主屏幕App模式全屏铺满(仅手机PWA生效,PC不受影响)</span>
-            </label>
-            <div class="flex-container" style="margin-top:5px;gap:5px;">
-                <div id="pwa_fullcover_debug_btn" class="menu_button" title="手机上若仍有边缝,打开后把红条数字报给开发者">显示调试信息</div>
+        <div class="inline-drawer" style="background-color: transparent">
+            <div class="inline-drawer-toggle inline-drawer-header">
+                <b>PWA FullCover</b>
+                <div class="inline-drawer-icon fa-solid fa-circle-chevron-down down"></div>
+            </div>
+            <div class="inline-drawer-content">
+                <label class="checkbox_label">
+                    <input id="pwa_fullcover_enabled" type="checkbox">
+                    <span>启用全屏铺满(仅手机主屏幕 App 模式生效)</span>
+                </label>
+                <div class="flex-container" style="margin-top:5px;gap:5px;">
+                    <div id="pwa_fullcover_debug_btn" class="menu_button" title="手机上若仍有边缝,打开后把红条数字报给开发者">显示调试信息</div>
+                </div>
             </div>
         </div>`;
         $('#extensions_settings').append(html);
