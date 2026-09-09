@@ -31,8 +31,16 @@ if exist "data\default-user\extensions\st-pwa-fullcover\manifest.json" (
     echo       already installed, skipping.
 ) else (
     mkdir "data\default-user\extensions" 2>nul
-    powershell -NoProfile -ExecutionPolicy Bypass -Command "$t=Join-Path $env:TEMP 'pwa-fullcover-setup'; Remove-Item -Recurse -Force $t -ErrorAction SilentlyContinue; New-Item -ItemType Directory -Path $t | Out-Null; [Net.ServicePointManager]::SecurityProtocol=[Net.SecurityProtocolType]::Tls12; Invoke-WebRequest 'https://github.com/atostar409/st-pwa-fullcover/archive/refs/heads/main.zip' -OutFile (Join-Path $t 'ext.zip'); Expand-Archive (Join-Path $t 'ext.zip') (Join-Path $t 'unz') -Force; Move-Item (Join-Path $t 'unz\st-pwa-fullcover-main') 'data\default-user\extensions\st-pwa-fullcover'; Remove-Item -Recurse -Force $t"
-    if errorlevel 1 goto :fail
+    echo       downloading from GitHub, timeout is 60s, please wait...
+    powershell -NoProfile -ExecutionPolicy Bypass -Command "$ProgressPreference='SilentlyContinue'; $ErrorActionPreference='Stop'; try { $t=Join-Path $env:TEMP 'pwa-fullcover-setup'; Remove-Item -Recurse -Force $t -ErrorAction SilentlyContinue; New-Item -ItemType Directory -Path $t | Out-Null; [Net.ServicePointManager]::SecurityProtocol=[Net.SecurityProtocolType]::Tls12; Invoke-WebRequest 'https://github.com/atostar409/st-pwa-fullcover/archive/refs/heads/main.zip' -OutFile (Join-Path $t 'ext.zip') -TimeoutSec 60; Expand-Archive (Join-Path $t 'ext.zip') (Join-Path $t 'unz') -Force; Move-Item (Join-Path $t 'unz\st-pwa-fullcover-main') 'data\default-user\extensions\st-pwa-fullcover'; Remove-Item -Recurse -Force $t; exit 0 } catch { exit 1 }"
+    if errorlevel 1 (
+        echo       [!] Could not download from GitHub within 60 seconds.
+        echo           The config patch from step 1 is already saved, the server
+        echo           itself will work fine. Only the extension is missing.
+        echo           Get it manually: copy the st-pwa-fullcover folder into
+        echo           data\default-user\extensions\
+        echo           or install later from the web UI: Extensions - Install extension.
+    )
 )
 
 echo [3/3] All done. Your IPv4 address on this Wi-Fi:
